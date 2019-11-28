@@ -13,10 +13,3 @@ def decryption(cryptomessage, key):
         code = (ord(j) - ord(key[i])) % 26 + 65
         message += chr(code)
     return message
-
-text = "HELLO"
-key = "WORLD"
-
-cryptomessage = encryption(message=text,key=key)
-print(cryptomessage)
-print(decryption(cryptomessage=cryptomessage, key=key))
