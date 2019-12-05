@@ -29,12 +29,3 @@ def createtable():
         table.append(abc[char])
         abc = abc[:char] + abc[char + 1:]
     return table
-
-table = createtable()
-message = "HELLO"
-key = "loshara"
-cryptomessage = encryption(message=message,key=key,table=table)
-print(table)
-print(cryptomessage)
-message = decryption(cryptomessage=cryptomessage,key=key,table=table)
-print(message)
