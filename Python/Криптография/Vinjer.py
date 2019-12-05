@@ -1,15 +1,40 @@
-def encryption(message, key):
+import random
+def encryption(message, key, table=None):
     cryptomessage = ""
     key *= len(message) // len(key) + 1
     for i, j in enumerate(message):
-        code = (ord(j) + ord(key[i])) % 26  + 65
-        cryptomessage += chr(code)
+        code = (ord(j) + ord(key[i])) % 26
+        if table:
+            cryptomessage += table[code]
+        else:
+            cryptomessage += chr(code + 65)
     return cryptomessage
 
-def decryption(cryptomessage, key):
+def decryption(cryptomessage, key, table=None):
     message = ""
-    key *= len(message) // len(key) + 1
+    key *= len(cryptomessage) // len(key) + 1
     for i, j in enumerate(cryptomessage):
-        code = (ord(j) - ord(key[i])) % 26 + 65
-        message += chr(code)
+        if table:
+            code = (table.index(j) - ord(key[i]) - 65) % 26 
+        else:
+            code = (ord(j) + ord(key[i])) % 26
+        message += chr(code + 65)
     return message
+
+def createtable():
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    table = []
+    for i in range(26):
+        char = random.randrange(0, 26 - i, 1)
+        table.append(abc[char])
+        abc = abc[:char] + abc[char + 1:]
+    return table
+
+table = createtable()
+message = "HELLO"
+key = "loshara"
+cryptomessage = encryption(message=message,key=key,table=table)
+print(table)
+print(cryptomessage)
+message = decryption(cryptomessage=cryptomessage,key=key,table=table)
+print(message)
